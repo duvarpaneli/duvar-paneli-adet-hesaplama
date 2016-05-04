@@ -1,0 +1,179 @@
+/* www.duvar-paneli.com tarafından ölçü hesaplamak amacıyla yapılmıştır. */
+/* duvarpanelci@gmail.com adresinden bilgi alabilirsiniz. */
+
+package adet.hesapla;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.CompoundBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.awt.Cursor;
+/*
+ * @Author duvar-paneli.com
+ * @see    http://www.duvar-paneli.com
+ */
+public class PanelAdetHesapla extends JFrame {
+
+	private JPanel contentPane;
+	
+	private int _yukseklik;
+	private int _genislik;
+	private int _ySonuc;
+	private int _gSonuc;
+	private JTextField txtYukseklik;
+	private JTextField txtGenislik;
+	private JLabel lblSonuc;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+
+	
+	private void hesapla(){
+		
+		try {
+		
+		if(txtYukseklik.getText().isEmpty() || txtGenislik.getText().isEmpty()){
+			lblSonuc.setText("Boş alanları doldurunuz !");
+			return;
+		}
+		
+		_yukseklik = Integer.parseInt(txtYukseklik.getText());
+		_ySonuc = _yukseklik/50;
+		
+		_genislik = Integer.parseInt(txtGenislik.getText());
+		_gSonuc = _genislik/100;
+		
+		if(_yukseklik%50!=0) { _ySonuc++; }
+		
+		if(_genislik%100!=0) { _gSonuc++; }
+		
+		lblSonuc.setText(String.valueOf(_ySonuc*_gSonuc + " adet duvar paneli gereklidir"));
+		
+		
+		} catch (Exception e) {
+			lblSonuc.setText("Lütfen rakam giriniz !");
+		}
+				
+	}
+
+	public PanelAdetHesapla() {
+		setTitle("Duvar Paneli Adet Hesaplama v1.0");
+		setResizable(false);
+		gorsellik();
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					PanelAdetHesapla frame = new PanelAdetHesapla();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	private void gorsellik(){
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 488, 168);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		JButton btnHesapla = new JButton("Hesapla");
+		btnHesapla.setBounds(10, 85, 456, 19);
+		btnHesapla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				 hesapla();
+			}
+		});
+		
+		txtYukseklik = new JTextField();
+		txtYukseklik.setForeground(new Color(128, 128, 0));
+		txtYukseklik.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtYukseklik.setBounds(114, 11, 123, 22);
+		txtYukseklik.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+		txtYukseklik.setColumns(10);
+		
+		txtGenislik = new JTextField();
+		txtGenislik.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtGenislik.setForeground(new Color(128, 128, 0));
+		txtGenislik.setBounds(343, 11, 123, 22);
+		txtGenislik.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+		txtGenislik.setColumns(10);
+		
+		lblSonuc = new JLabel("");
+		lblSonuc.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSonuc.setForeground(new Color(0, 100, 0));
+		lblSonuc.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSonuc.setBounds(10, 54, 456, 18);
+		lblSonuc.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+		
+		lblNewLabel = new JLabel("Y\u00FCkseklik (cm)");
+		lblNewLabel.setBounds(10, 16, 86, 15);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
+		lblNewLabel_1 = new JLabel("Geni\u015Flik (cm)");
+		lblNewLabel_1.setBounds(257, 16, 76, 15);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		contentPane.setLayout(null);
+		contentPane.add(lblNewLabel);
+		contentPane.add(lblNewLabel_1);
+		contentPane.add(lblSonuc);
+		contentPane.add(btnHesapla);
+		contentPane.add(txtYukseklik);
+		contentPane.add(txtGenislik);
+		
+		lblNewLabel_2 = new JLabel("www.duvar-paneli.com adresinden indirilebilir");
+		lblNewLabel_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNewLabel_2.setForeground(new Color(0, 100, 0));
+		lblNewLabel_2.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			
+					try {
+						Desktop.getDesktop().browse(new URI("http://www.duvar-paneli.com"));
+					} catch (IOException | URISyntaxException e1) {
+					
+					}
+				
+			}
+		});
+		lblNewLabel_2.setBounds(39, 115, 377, 17);
+		contentPane.add(lblNewLabel_2);
+	}
+}
